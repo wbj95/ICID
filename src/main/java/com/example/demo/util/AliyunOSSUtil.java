@@ -18,7 +18,7 @@ public class AliyunOSSUtil {
     private static String bucketName = "zhilianjiaohu";
     private static String endpoint = "oss-cn-beijing.aliyuncs.com";
     private static String accessKeyId = *****
-    private static String accessKeySecret = ***
+    private static String accessKeySecret = ****
 
     /**
      * 通过文件名下载文件
