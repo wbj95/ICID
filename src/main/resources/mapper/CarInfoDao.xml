@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.CarInfoDao">
+    <sql id="table">carinfomation</sql>
+    <sql id="selectFields">ID,vin, projectName,borrower ,configuration,state,city,address,datamileage,dataStart,longitude,latitude
+    </sql>
+    <select id="queryCarInfo" resultType="com.example.demo.model.carInfo">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+
+    </select>
+
+    <select id="fuzzyQueryCarInfo" resultType="com.example.demo.model.carInfo">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+       where vin LIKE "%"#{vin}"%"
+    </select>
+
+    <select id="queryCarInfoByMileage" resultType="com.example.demo.model.carInfo">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        ORDER by datamileage DESC
+    </select>
+
+    <select id="queryCarInfoByStart" resultType="com.example.demo.model.carInfo">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        ORDER by dataStart DESC
+    </select>
+
+    <select id="queryCarInfoByVin" resultType="com.example.demo.model.carInfo">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        where
+        vin=#{vin}
+    </select>
+
+    <update id="updateCarInfoByID" parameterType="com.example.demo.model.carInfo">
+update  <include refid="table"/>
+    <set>
+        projectName=#{projectName},
+        vin=#{vin},
+        borrower=#{borrower},
+        configuration=#{configuration},
+        state=#{state}
+    </set>
+    </update>
+
+    <update id="updateCarstartNumByVin" parameterType="com.example.demo.model.carInfo">
+        update  <include refid="table"/>
+        <set>
+            dataStart=NULL
+        </set>
+        where
+        vin=#{vin}
+    </update>
+
+    <update id="updateLocation" parameterType="com.example.demo.model.carInfo">
+        update  <include refid="table"/>
+        <set>
+            longitude=#{longitude},
+            latitude=#{latitude}
+        </set>
+        where
+        vin=#{vin}
+    </update>
+
+    <update id="updateCarCityAndAddressByVin" parameterType="com.example.demo.model.carInfo">
+        update  <include refid="table"/>
+        <set>
+            city=#{city},
+            address=#{address}
+        </set>
+
+        where vin=#{vin}
+    </update>
+
+    <update id="updateMileageByVin" parameterType="com.example.demo.model.carInfo">
+        update  <include refid="table"/>
+        <set>
+            datamileage=#{datamileage},
+        </set>
+
+        where vin=#{vin}
+    </update>
+
+    <update id="updataCarMileageAndStartByVin" parameterType="com.example.demo.model.carInfo">
+        update  <include refid="table"/>
+        <set>
+            datamileage=#{datamileage},
+            dataStart=#{dataStart}
+        </set>
+
+        where vin=#{vin}
+    </update>
+
+    <update id="updateBorrow" parameterType="com.example.demo.model.carInfo">
+        update  <include refid="table"/>
+        <set>
+            borrower=#{borrower},
+            iphoneNum=#{phoneNum}
+        </set>
+
+        where vin=#{vin}
+    </update>
+
+    <insert id="insertCarInfo" useGeneratedKeys="true" keyProperty="ID"
+             parameterType="com.example.demo.model.carInfo">
+        INSERT INTO
+        carinfomation(projectName,vin, borrower,configuration,state)
+        VALUES
+        (#{projectName},#{vin},
+        #{borrower},#{configuration},#{state})
+    </insert>
+
+    <delete id="deleteCarInfoByID">
+        delete from
+        <include refid="table"/>
+        where
+        ID=#{ID}
+    </delete>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.StaffDao">
+    <sql id="table">staff</sql>
+<!--    <sql id="selectFields">idstaff,staffName-->
+<!--    </sql>-->
+    <select id="queryAllStaff" resultType="com.example.demo.model.Staff">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+
+    </select>
+    <select id="queryStaffByName" resultType="com.example.demo.model.Staff">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        where
+        staffName=#{staffName}
+    </select>
+</mapper>

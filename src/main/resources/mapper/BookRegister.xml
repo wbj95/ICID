@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.BookRegisterDao">
+    <sql id="table">bookregister</sql>
+    <sql id="selectFields">idbookRegister,bookName,bookNo,state,borrowerName,borrowerIphone,starttime,endtime
+    </sql>
+    <select id="querayAllBook" resultType="com.example.demo.model.BookRegister">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+
+    </select>
+    <update id="updateBook" parameterType="com.example.demo.model.BookRegister">
+        update  <include refid="table"/>
+        <set>
+            state=#{state},
+            borrowerName=#{borrowerName},
+            borrowerIphone=#{borrowerIphone},
+            starttime=#{starttime},
+            endtime=#{endtime}
+        </set>
+        where
+        bookNo=#{bookNo}
+    </update>
+    <select id="queryBorrowerName" resultType="com.example.demo.model.BookRegister">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+where
+        bookNo=#{bookNo}
+    </select>
+    <update id="returnbook" parameterType="com.example.demo.model.BookRegister">
+        update  <include refid="table"/>
+        <set>
+            state=#{state},
+            borrowerName="",
+            borrowerIphone="",
+            starttime="",
+            endtime="",
+            renew=""
+        </set>
+        where
+        bookNo=#{bookNo}
+    </update>
+
+    <update id="renewBook" parameterType="com.example.demo.model.BookRegister">
+        update  <include refid="table"/>
+        <set>
+            renew=#{renew},
+            starttime=#{starttime},
+            endtime=#{endtime}
+        </set>
+        where
+        bookNo=#{bookNo}
+    </update>
+</mapper>
