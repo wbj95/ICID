@@ -19,6 +19,26 @@ public class BookRegister {
     private String endTime;
     //续借次数
     private String renew;
+    //书本详细描述
+    private String describle;
+    //封面url
+    private String bookImagesUrl;
+
+    public String getBookImagesUrl() {
+        return bookImagesUrl;
+    }
+
+    public void setBookImagesUrl(String bookImagesUrl) {
+        this.bookImagesUrl = bookImagesUrl;
+    }
+
+    public String getDescrible() {
+        return describle;
+    }
+
+    public void setDescrible(String describle) {
+        this.describle = describle;
+    }
 
     public String getRenew() {
         return renew;

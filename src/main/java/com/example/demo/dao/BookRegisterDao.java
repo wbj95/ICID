@@ -20,5 +20,9 @@ public interface BookRegisterDao {
     //续借
     int renewBook(@Param("renew")String renew,@Param("bookNo")String bookNo,@Param("starttime") String starttime, @Param("endtime") String endtime);
 
+    //更新数据表，将URL放入表中。
+    int updateUrl(@Param("bookImagesUrl")String bookImagesUrl,@Param("bookNo")String bookNo);
 
+    //根据BOOKID查询书名
+    BookRegister quearyBookName(@Param("bookNo")String bookNo);
 }

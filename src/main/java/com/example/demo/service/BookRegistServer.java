@@ -1,14 +1,19 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.BookRegisterDao;
+import com.example.demo.dao.HistoryBorrowerBooksDao;
 import com.example.demo.dao.StaffDao;
 import com.example.demo.model.BookRegister;
+import com.example.demo.model.HistoryBorroweBooks;
 import com.example.demo.model.Staff;
+import com.example.demo.util.AliyunOSSUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.jasper.tagplugins.jstl.core.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -20,12 +25,34 @@ public class BookRegistServer {
     @Autowired
    BookRegisterDao bookRegisterDao;
     @Autowired
+    HistoryBorrowerBooksDao historyBorrowerBooksDao;
+    @Autowired
   StaffServer staffServer;
+
+    AliyunOSSUtil aliyun=new AliyunOSSUtil();
 
     //查询所有书籍信息
     public JSONObject queryAllBook(){
-        JSONObject jsonObject=new JSONObject();
 
+        System.out.println("啦啦啦啦阿拉啦啦啦");
+        JSONObject jsonObject=new JSONObject();
+//先遍历获取OSS图书本的URL
+        List<String> images=aliyun.ListBookimages();
+
+        for (int i=0;i<images.size();i++){
+            //获取url
+            URL u=aliyun.getUrl(images.get(i));
+            System.out.println(u.toString());
+            int j=i+1;
+            if (j<10){
+                bookRegisterDao.updateUrl(u.toString(),"#0"+j);
+            }else {
+                bookRegisterDao.updateUrl(u.toString(),"#"+j);
+            }
+
+
+            //插入数据库
+        }
         List<BookRegister> res=bookRegisterDao.querayAllBook();
     //    List<Staff> s=  staffDao.queryStaffByName("韦保俊");
     //    System.out.println("结果："+s.get(0).getStaffName());
@@ -48,13 +75,17 @@ public class BookRegistServer {
         if (s){
             //查有此人
             //获取当前日期
-
             SimpleDateFormat dateFormat = new SimpleDateFormat(" yyyy-MM-dd ");
             String nextMon=nextMonth();
 
             String currentDate =   dateFormat.format( new Date() );
             //更新表
           int res=  bookRegisterDao.updateBook(BookNO,"借出",borrowerName,borrowerIphone,currentDate,nextMon);
+          //查询书名
+            BookRegister r=bookRegisterDao.quearyBookName(BookNO);
+            System.out.println(r.getBookName());
+          //更新历史借书表
+            historyBorrowerBooksDao.updateHistory(BookNO,r.getBookName(),borrowerName,currentDate,nextMon);
           System.out.println(res);
             jsonObject.put("data","1");//借书成功
         }else {

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.dao.BookRegisterDao">
     <sql id="table">bookregister</sql>
-    <sql id="selectFields">idbookRegister,bookName,bookNo,state,borrowerName,borrowerIphone,starttime,endtime
+    <sql id="selectFields">idbookRegister,bookName,bookNo,state,borrowerName,borrowerIphone,starttime,endtime,
     </sql>
     <select id="querayAllBook" resultType="com.example.demo.model.BookRegister">
         SELECT
@@ -56,4 +56,21 @@ where
         where
         bookNo=#{bookNo}
     </update>
+
+    <update id="updateUrl" parameterType="com.example.demo.model.BookRegister">
+        update  <include refid="table"/>
+        <set>
+            bookImagesUrl=#{bookImagesUrl},
+        </set>
+        where
+        bookNo=#{bookNo}
+    </update>
+    <select id="quearyBookName" resultType="com.example.demo.model.BookRegister">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+where
+        bookNo=#{bookNo}
+    </select>
 </mapper>

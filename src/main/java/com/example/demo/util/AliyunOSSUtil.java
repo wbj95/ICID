@@ -73,7 +73,6 @@ public class AliyunOSSUtil {
         // 创建OSSClient实例。
         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         List<String> list = new ArrayList<>();
-   //     ObjectListing objectListing = ossClient.listObjects(bucketName);
         // 构造ListObjectsRequest请求。
         ListObjectsRequest listObjectsRequest = new ListObjectsRequest(bucketName);
 //        // 设置正斜线（/）为文件夹的分隔符。
@@ -211,6 +210,30 @@ list.add(commonPrefix);
         // 关闭OSSClient。
         ossClient.shutdown();
         return list;
+    }
+
+    //列出所有书封面
+    public static List<String> ListBookimages(){
+        List<String> listbookimages=new ArrayList<>();
+// 创建OSSClient实例。
+        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        // 构造ListObjectsRequest请求。
+        ListObjectsRequest listObjectsRequest = new ListObjectsRequest(bucketName);
+//        // 设置正斜线（/）为文件夹的分隔符。
+        listObjectsRequest.setDelimiter("/");
+// 设置prefix参数来获取fun目录下的所有文件
+        listObjectsRequest.setPrefix("books_Images/books_images/");
+        // 递归列出fun目录下的所有文件。
+        ObjectListing listing = ossClient.listObjects(listObjectsRequest);
+        // 遍历所有文件。
+        System.out.println("Objects:");
+        for (OSSObjectSummary objectSummary : listing.getObjectSummaries()) {
+            System.out.println(objectSummary.getKey());
+            listbookimages.add(objectSummary.getKey());
+        }
+        // 关闭OSSClient。
+        ossClient.shutdown();
+        return listbookimages;
     }
 }
 

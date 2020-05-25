@@ -21,6 +21,7 @@ public class booKTest {
     @Autowired
     private BookRegisterDao bookRegisterDao;
     private StaffDao staffDao;
+    private HistoryBorrowerBooksDao historyBorrowerBooksDao;
     private BookRegistServer bookRegistServer;
     @Test
     void queryAllBook(){
@@ -56,5 +57,12 @@ public class booKTest {
       //  BookRegister b=bookRegisterDao.queryBorrowerName("#03");
        int i= bookRegisterDao.returnbook("#03","在库");
         System.out.println("结果"+i);
+    }
+
+    //列出bookimages
+    @Test
+    void listimages(){
+     //bookRegistServer.queryAllBook();
+        historyBorrowerBooksDao.updateHistory("#01","乐福诗集","韦保俊","20202020","202020");
     }
 }
