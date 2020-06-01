@@ -15,8 +15,8 @@ import java.util.*;
 public class AliyunOSSUtil {
 
     private static String FILE_URL;
-    private static String bucketName = "zhilianjiaohu";
-    private static String endpoint = "oss-cn-beijing.aliyuncs.com";
+    private static String bucketName = "***";
+    private static String endpoint = "***";
     private static String accessKeyId = *****
     private static String accessKeySecret = ****
 
