@@ -113,11 +113,11 @@ public class MessageUtil {
         List<Element> elementList = root.elements();
         // 判断又没有子元素列表
         if (elementList.size()==0){
-            System.out.println(root.getName());
+
             map.put(root.getName(), root.getText());
         }else {
             for (Element e : elementList){
-                System.out.println(e.getName());
+
                 map.put(e.getName(), e.getText());
             }
 
@@ -126,7 +126,7 @@ public class MessageUtil {
         // 释放资源
         inputStream.close();
         inputStream = null;
-        System.out.println("---------xml转换为map-----:"+map);
+
         return map;
     }
     //将text信息转换为xml返回客户端

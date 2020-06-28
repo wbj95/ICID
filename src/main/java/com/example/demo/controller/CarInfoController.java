@@ -48,7 +48,6 @@ public class CarInfoController {
     //删除车辆
     @RequestMapping(path = {"/DeleteCar"},method = {RequestMethod.GET})
     public int DeleteCarByID(@RequestParam(value = "id", required = true) int id){
-        System.out.println("删除ID"+id);
        return carInfoServer.DeleteCar(id);
     }
     //新增车辆
@@ -59,7 +58,6 @@ public class CarInfoController {
                       @RequestParam(value = "configuration", required = true) String configuration,
                       @RequestParam(value = "state", required = true) String state
                       ){
-        System.out.println(projectName+vin+borrower+"测试");
         carInfo c = new carInfo();
        c.setProjectName(projectName);
         c.setVin(vin);
@@ -77,7 +75,6 @@ public class CarInfoController {
                          @RequestParam(value = "configuration", required = true) String configuration,
                          @RequestParam(value = "state", required = true) String state
                          ){
-        System.out.println("参数"+configuration+state);
         return carInfoServer.updateCar(id,projectName,vin,borrower,configuration,state);
 
     }
@@ -98,7 +95,6 @@ public class CarInfoController {
                       @RequestParam(value = "Name", required = true) String Name,
                       @RequestParam(value = "phoneNum", required = true) String phoneNum
     ){
-        System.out.println(vin+Name+phoneNum);
        return carInfoServer.updateBorrow(vin,Name,phoneNum);
     }
 
@@ -106,21 +102,18 @@ public class CarInfoController {
     @RequestMapping(path = {"/fuzzyQuery"},method = {RequestMethod.GET})
     public JSONObject fuzzyQuery(@RequestParam(value = "vin", required = true) String vin
     ){
-        System.out.println(vin);
         return carInfoServer.fuzzyQuery(vin);
     }
     //通过vin号查询最近七天行程
     @RequestMapping(path = {"/QueryTrip"},method = {RequestMethod.GET})
     public JSONObject QueryTrip(@RequestParam(value = "vin", required = true) String vin
     ){
-        System.out.println(vin);
         return carInfoServer.findTrip(vin);
     }
     //小程序传关键词数组来查询文件
     @RequestMapping(path = {"/findFiles"},method = {RequestMethod.POST})
     public JSONObject findFiles(@RequestParam("array")String[] array,@RequestParam("cusid")String cusid)
     {
-        System.out.println(Arrays.toString(array));//打印出数组
         JSONObject jsonObject=  carInfoServer.findFile(array);
         return jsonObject;
     }
@@ -128,7 +121,6 @@ public class CarInfoController {
    @RequestMapping(path = {"/findFilesByNum"},method = {RequestMethod.GET})
    public JSONObject findFilesByNum(@RequestParam(value = "fileName", required = true) String fileName)
    {
-       System.out.println("1111"+fileName);
 
       JSONObject j=carInfoServer.findUrl(fileName);
       return j;
@@ -137,7 +129,6 @@ public class CarInfoController {
     @RequestMapping(path = {"/findFilesURL"},method = {RequestMethod.GET})
     public JSONObject findFilesURL(@RequestParam(value = "fileName", required = true) String fileName)
     {
-        System.out.println("1111"+fileName);
 
         URL url=aliyun.getUrlBy(fileName);
         JSONObject j=new JSONObject();
@@ -166,7 +157,6 @@ public class CarInfoController {
     //获取微信公众号发过来的东西，这个是验证签名
     @RequestMapping(path = {"/getWeChatInfo"},method = {RequestMethod.GET})
     public void  getWeChatInfo(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-       System.out.println("梁仁德");
         request.setCharacterEncoding("UTF-8");
         String signature = request.getParameter("signature");
         String timestamp = request.getParameter("timestamp");
@@ -176,7 +166,6 @@ public class CarInfoController {
         try {
             out = response.getWriter();
             if (signUtil.checkSignature(signature, timestamp, nonce)) {
-                System.out.println("-------验证微信服务器结束--------");
                 out.write(echostr);
             }
         } catch (IOException e) {
@@ -198,7 +187,6 @@ public class CarInfoController {
         }else{
             String content=map.get("Content");
             carInfo c=carInfoServer.queryOneCarInfo(content);
-            System.out.println(c);
             if (c==null){//通过vin号查询出来的结果为空，borrow和iphone都为空
                 return messageDispatcher.processMessage(map,"","");
             }else {//查询出了结果，将数值传入方法中

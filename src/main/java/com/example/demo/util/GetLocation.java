@@ -15,7 +15,7 @@ public class GetLocation {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("Content-Type","application/json");
    //   j=sendGetPostUtil.sendGetRequest(url,params);
-   //   System.out.println("get结果"+j.get("data"));
+
       return  sendGetPostUtil.sendGetRequest(url,params);
     }
 }

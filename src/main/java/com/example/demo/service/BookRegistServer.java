@@ -34,7 +34,6 @@ public class BookRegistServer {
     //查询所有书籍信息
     public JSONObject queryAllBook(){
 
-        System.out.println("啦啦啦啦阿拉啦啦啦");
         JSONObject jsonObject=new JSONObject();
 //先遍历获取OSS图书本的URL
         List<String> images=aliyun.ListBookimages();
@@ -42,7 +41,6 @@ public class BookRegistServer {
         for (int i=0;i<images.size();i++){
             //获取url
             URL u=aliyun.getUrl(images.get(i));
-            System.out.println(u.toString());
             int j=i+1;
             if (j<10){
                 bookRegisterDao.updateUrl(u.toString(),"#0"+j);
@@ -55,23 +53,21 @@ public class BookRegistServer {
         }
         List<BookRegister> res=bookRegisterDao.querayAllBook();
     //    List<Staff> s=  staffDao.queryStaffByName("韦保俊");
-    //    System.out.println("结果："+s.get(0).getStaffName());
         JSONArray jsonArray = JSONArray.fromObject(res);
 
         jsonObject.put("bookdata",jsonArray);
 
-        System.out.println(jsonObject.toString());
         return jsonObject;
     }
 
     //借书
     public JSONObject borrowBook(String borrowerName,String borrowerIphone,String BookNO){
         JSONObject jsonObject=new JSONObject();
-        System.out.println(borrowerName);
+
         //根据姓名查询是否是本部门人员
    // List<Staff> s=  staffDao.queryStaffByName(borrowerName);
         boolean s=staffServer.isStaff(borrowerName);
-        System.out.println(s);
+
         if (s){
             //查有此人
             //获取当前日期
@@ -83,15 +79,15 @@ public class BookRegistServer {
           int res=  bookRegisterDao.updateBook(BookNO,"借出",borrowerName,borrowerIphone,currentDate,nextMon);
           //查询书名
             BookRegister r=bookRegisterDao.quearyBookName(BookNO);
-            System.out.println(r.getBookName());
+
           //更新历史借书表
             historyBorrowerBooksDao.updateHistory(BookNO,r.getBookName(),borrowerName,currentDate,nextMon);
-          System.out.println(res);
+
             jsonObject.put("data","1");//借书成功
         }else {
             jsonObject.put("data","0");//借书失败
         }
-        System.out.println(jsonObject);
+
         return jsonObject;
     }
 
@@ -166,7 +162,6 @@ public class BookRegistServer {
         else m=month+"";
         if(day<10) d = "0"+day;
         else d = day+"";
-        System.out.println(y+"-"+m+"-"+d);
         return y+"-"+m+"-"+d;
     }
 }

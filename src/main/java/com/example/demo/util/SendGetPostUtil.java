@@ -73,14 +73,14 @@ public class SendGetPostUtil {
             jsonObject1.put("vin",vin[i]);
             jsonArray.add(jsonObject1);
         }
-       System.out.println(jsonArray.toString());
+
        JSONObject jsonObject2  = new JSONObject();
        jsonObject2.put("vinList",jsonArray.toString());
         //请求头和请求体合成一起
         HttpEntity<JSONObject> requestEntity = new HttpEntity<JSONObject>(jsonObject2, headers);
         //执行HTTP请求
         ResponseEntity<String> response = template.exchange(url, method, requestEntity, String.class);
-        System.out.println(response.getBody() + "Json的结果吗？");
+
 
         return response.getBody();
     }
@@ -99,12 +99,12 @@ public class SendGetPostUtil {
         jsonObject.put("vin" , vin);
         jsonObject.put("endDate",currentData);
         jsonObject.put("onDate",yz_time);
-        System.out.println(jsonObject.get("vin"));
+
         //请求头和请求体合成一起
         HttpEntity<JSONObject> requestEntity = new HttpEntity<JSONObject>(jsonObject, headers);
         //执行HTTP请求
         ResponseEntity<String> response = template.exchange(url, method, requestEntity, String.class);
-        System.out.println(response.getBody() + "Json的结果吗？");
+
         jsonObject.put("data",response.getBody());
         return jsonObject;
     }
@@ -122,17 +122,17 @@ public class SendGetPostUtil {
         calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - 7);
         Date beforeDay = calendar.getTime();
         String bf=f.format(beforeDay);
-        System.out.println(bf+currentData);
+
         //将vin封装成json
         jsonObject.put("vin" , vin);
         jsonObject.put("beginDate",bf);
         jsonObject.put("endDate",currentData);
-        System.out.println(jsonObject);
+
         //请求头和请求体合成一起
         HttpEntity<JSONObject> requestEntity = new HttpEntity<JSONObject>(jsonObject, headers);
         //执行HTTP请求
         ResponseEntity<String> response = template.exchange(url, method, requestEntity, String.class);
-        System.out.println(response.getBody() + "Json的结果吗？");
+
         jsonObject.put("data",response.getBody());
         return jsonObject;
     }
@@ -151,7 +151,7 @@ public class SendGetPostUtil {
         HttpEntity<JSONObject> requestEntity = new HttpEntity<JSONObject>(jsonObject, headers);
         //执行HTTP请求
         ResponseEntity<String> response = template.exchange(url, method, requestEntity, String.class);
-   //     System.out.println(response.getBody() + "Json的结果吗？");
+
         jsonObject.put("data",response.getBody());
         return jsonObject;
     }

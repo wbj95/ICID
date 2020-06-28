@@ -90,9 +90,9 @@ public class GetHeaderServer {
         GetTimeIntervalUtil getTimeIntervalUtil1=new GetTimeIntervalUtil();
         String yz_time=getTimeIntervalUtil1.getTimeInterval(new Date());//获取本周一时间
         sign=key+"&"+"endDate="+currentData +"&onDate="+yz_time +"&vin="+vin+"&"+ ts + "&" + code + "&" + appSecret;
-        System.out.println("sign:" + sign);
+
         sign = DigestUtils.md5DigestAsHex(sign.getBytes());
-        System.out.println("加密后sign:" + sign);
+
         return sign;
     }
 
@@ -107,11 +107,11 @@ public class GetHeaderServer {
         calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - 7);
         Date beforeDay = calendar.getTime();
         String bf=f.format(beforeDay);
-System.out.println(bf);
+
         sign=key+"&"+"beginDate="+bf +"&endDate="+currentData +"&vin="+vin+"&"+ ts + "&" + code + "&" + appSecret;
-        System.out.println(sign);
+
         sign = DigestUtils.md5DigestAsHex(sign.getBytes());
-        System.out.println("加密后sign:" + sign);
+
         return sign;
     }
 

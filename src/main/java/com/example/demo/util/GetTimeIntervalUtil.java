@@ -22,10 +22,10 @@ public class GetTimeIntervalUtil {
         // 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值  
         cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);
         String imptimeBegin = sdf.format(cal.getTime());
-        // System.out.println("所在周星期一的日期：" + imptimeBegin);  
+
         cal.add(Calendar.DATE, 6);
         String imptimeEnd = sdf.format(cal.getTime());
-        // System.out.println("所在周星期日的日期：" + imptimeEnd);  
+
         return imptimeBegin;
     }
 }

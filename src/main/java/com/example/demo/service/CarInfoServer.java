@@ -73,19 +73,18 @@ public class CarInfoServer {
            jso.put("vin",v);
            JSONObject jj=JSONObject.fromObject(jso.get("regeocode"));
            JSONObject jjj=JSONObject.fromObject(jj.get("addressComponent"));
-           System.out.println(vin[i]+jjj);
+
         //    city = (String) jjj.get("city");
           // city = (String) jjj.get("province");
 
             city= String.valueOf(jjj.get("city"));
-            System.out.println(city);
-            //System.out.println(city2==null);
+
            if (city.equals("[]")){
                city=String.valueOf(jjj.get("province"));
            }
 
            Address=jj.getString("formatted_address");
-          //System.out.println(city+Address+v);
+
            //根据vin号，将城市，位置插入数据库
             carInfoDao.updateCarCityAndAddressByVin(city,Address,v);
 
@@ -106,7 +105,7 @@ public class CarInfoServer {
         params.add("code", getHeaderServer.getCode());
         params.add("sign",getHeaderServer.getSignbyVIN(Vin));
         params.add("ts", getHeaderServer.getTs());
-        System.out.println("时间戳"+params.get("ts"));
+
         jsonObject=sendGetPostUtil.sendGetRequest(DataUrl,params);
 
         return jsonObject;
@@ -159,7 +158,7 @@ public class CarInfoServer {
         params.add("code", getHeaderServer.getCode());
         params.add("sign",getHeaderServer.getSignbyVIN(vin));
         params.add("ts", getHeaderServer.getTs());
-        System.out.println("时间戳"+params.get("ts"));
+
         JSONObject jsonObject = new JSONObject();
         //调用电量的接口
         JSONObject jsonObject1 = sendGetPostUtil.sendGetRequest(url, params);
@@ -183,16 +182,16 @@ public class CarInfoServer {
 
             //查询单台车数据
         carInfo c=carInfoDao.queryCarInfoByVin(vin);
-        System.out.println("lalall"+c.getVin()+c.getBorrower());
+
         jsonObject.put("oneCar",c);
         return jsonObject;
     }
     //查询排行
     public JSONObject queryRankin() {
-        //System.out.println(queryAllCarInfo());
+
         JSONObject jRank=new JSONObject();
         List<carInfo> allCarVin = carInfoDao.queryCarInfo();
-        System.out.println("1111");
+
         //定义String 数组，装vin号
         String[] vin=new String[allCarVin.size()];
        //一台台查本周里程
@@ -227,7 +226,7 @@ public class CarInfoServer {
             JSONObject jj3=JSONObject.fromObject(jsonObject3.get("data"));
             //获取数据状态
             String code= String.valueOf(jj3.get("code"));
-            System.out.println("1231"+code);
+
             //如果启动次数无数据
             if (!code.equals("0")){
                 //更新数据库,将启动次数删除
@@ -266,7 +265,7 @@ public class CarInfoServer {
         JSONObject json = new JSONObject();
         List<carInfo> allCarInfo2 = carInfoDao.fuzzyQueryCarInfo(vin);
         JSONArray jsonArray = JSONArray.fromObject(allCarInfo2);
-        System.out.println(allCarInfo2.size()+"lalal");
+
         json.put("fuzzyQuery",jsonArray);
         return json;
     }
@@ -301,7 +300,7 @@ public class CarInfoServer {
             JSONObject jso1= JSONObject.fromObject(j4.get("data"));
             JSONObject jj1=JSONObject.fromObject(jso1.get("regeocode"));
             String startAddress=jj1.getString("formatted_address");
-            System.out.println("开始"+startAddress);
+
             j3.getJSONObject(i).put("startAdress",startAddress);
             j3.getJSONObject(i).put("id",i);
             String endlng=endGPS.substring(0, endGPS.indexOf(","));
@@ -310,13 +309,13 @@ public class CarInfoServer {
             JSONObject jso= JSONObject.fromObject(j5.get("data"));
             JSONObject jj=JSONObject.fromObject(jso.get("regeocode"));
            String endAddress=jj.getString("formatted_address");
-            System.out.println("结束"+endAddress);
+
             j3.getJSONObject(i).put("endAdress",endAddress);
 
-            System.out.println(j3);
+
         }
         json.put("Trip",j3);
-        System.out.println(json);
+
         return  json;
     }
 
@@ -346,8 +345,7 @@ public class CarInfoServer {
                 if(allList.get(j).contains(keywords)){
                     JSONObject jj=new JSONObject();
                     //先去掉files/
-                    System.out.println("有前缀"+allList.get(j));
-                    System.out.println("wu前缀"+noDir.get(j));
+
                     String file=allList.get(j);
                     map.put(file,file);
                     //获取url
@@ -380,7 +378,7 @@ public class CarInfoServer {
     //根据文件名查询文档下载地址
     public JSONObject findUrl(String fileName){
        URL url= aliyun.getUrl(fileName);
-       System.out.println(url.toString());
+
        JSONObject j=new JSONObject();
        j.put("url",url.toString());
        return j;
@@ -403,7 +401,7 @@ j2.put("directory",dir.get(i));
        list.add(j2.toString());
         }
 j.put("data",list);
-        System.out.println(j);
+
         return j;
         }
 

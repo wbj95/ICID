@@ -22,7 +22,6 @@ public class BookRegistController {
     public JSONObject ListAllBook(){
 
         JSONObject j=bookRegistServer.queryAllBook();
-        System.out.println(j);
         return j;
     }
     //借书
@@ -30,9 +29,7 @@ public class BookRegistController {
     public JSONObject borrowBooks(@RequestParam(value = "borrowerName", required = true) String borrowerName,
                                   @RequestParam(value = "borrowerIphone", required = true) String borrowerIphone,
                                   @RequestParam(value = "bookID", required = true) String bookID){
-        System.out.println(borrowerName+borrowerIphone+bookID);
         JSONObject j=bookRegistServer.borrowBook(borrowerName,borrowerIphone,bookID);
-        System.out.println(j);
         return j;
     }
 
@@ -41,7 +38,6 @@ public class BookRegistController {
     @RequestMapping(path = {"/returnbook"},method = {RequestMethod.GET})
     public JSONObject returnBook(@RequestParam(value = "borrowerName", required = true) String borrowerName,
                                   @RequestParam(value = "bookID", required = true) String bookID){
-        System.out.println(borrowerName+bookID);
         JSONObject jsonObject=bookRegistServer.returnBookServer(borrowerName,bookID);
         return jsonObject;
     }
@@ -49,7 +45,6 @@ public class BookRegistController {
     @RequestMapping(path = {"/renewBook"},method = {RequestMethod.GET})
     public JSONObject renewBook(@RequestParam(value = "borrowerName", required = true) String borrowerName,
                                  @RequestParam(value = "bookID", required = true) String bookID){
-        System.out.println(borrowerName+bookID);
        // JSONObject jsonObject=bookRegistServer.returnBookServer(borrowerName,bookID);
         JSONObject j=bookRegistServer.renewBook(borrowerName,bookID);
         return j;

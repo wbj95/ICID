@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.AssetManagementDao">
+    <sql id="table">assetmanagement</sql>
+    <!--    <sql id="selectFields">idstaff,staffName-->
+    <!--    </sql>-->
+    <select id="quearyAsset" resultType="com.example.demo.model.AssetManagement">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+
+    </select>
+</mapper>
