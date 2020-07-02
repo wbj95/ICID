@@ -23,7 +23,7 @@ public class BookRegistServer {
 
 
     @Autowired
-   BookRegisterDao bookRegisterDao;
+    BookRegisterDao bookRegisterDao;
     @Autowired
     HistoryBorrowerBooksDao historyBorrowerBooksDao;
     @Autowired
