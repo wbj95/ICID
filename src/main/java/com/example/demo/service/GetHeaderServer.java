@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.alibaba.fastjson.JSONArray;
 import com.example.demo.util.GetTimeIntervalUtil;
 import net.sf.json.JSONObject;
+import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class GetHeaderServer {
     //Key
     String key = "5c2c7c61103d60b76bc4ee2d";

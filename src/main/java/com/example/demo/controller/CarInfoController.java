@@ -9,6 +9,7 @@ import com.example.demo.util.MessageUtil;
 import com.example.demo.util.SignUtil;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,14 +26,13 @@ import java.util.Map;
 @RestController
 public class CarInfoController {
 
-    private CarInfoServer carInfoServer;
-    private CarInfoDao carInfoDao;
+    @Autowired
+    CarInfoServer carInfoServer;
+
     private SignUtil signUtil;
     AliyunOSSUtil aliyun=new AliyunOSSUtil();
 
-    public CarInfoController(CarInfoServer carInfoServer) {
-        this.carInfoServer = carInfoServer;
-    }
+
   //查询所有车辆信息
     @RequestMapping(path = {"/getAllCarInfo"},method = {RequestMethod.GET})
     public JSONObject ListCar(){

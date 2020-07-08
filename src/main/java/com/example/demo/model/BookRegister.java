@@ -22,7 +22,10 @@ public class BookRegister {
     //书本详细描述
     private String describle;
     //封面url
+
     private String bookImagesUrl;
+
+
 
     public String getBookImagesUrl() {
         return bookImagesUrl;

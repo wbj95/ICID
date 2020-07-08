@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.dao.BookRegisterDao">
     <sql id="table">bookregister</sql>
-    <sql id="selectFields">idbookRegister,bookName,bookNo,state,borrowerName,borrowerIphone,starttime,endtime,
+    <sql id="selectFields">id,book_name,book_no,state,borrower_name,borrower_iphone,start_time,end_time,
     </sql>
     <select id="querayAllBook" resultType="com.example.demo.model.BookRegister">
         SELECT
@@ -16,13 +16,13 @@
         update  <include refid="table"/>
         <set>
             state=#{state},
-            borrowerName=#{borrowerName},
-            borrowerIphone=#{borrowerIphone},
-            starttime=#{starttime},
-            endtime=#{endtime}
+            borrower_name=#{borrowerName},
+            borrower_iphone=#{borrowerIphone},
+            start_time=#{starttime},
+            end_time=#{endtime}
         </set>
         where
-        bookNo=#{bookNo}
+        book_no=#{bookNo}
     </update>
     <select id="queryBorrowerName" resultType="com.example.demo.model.BookRegister">
         SELECT
@@ -30,40 +30,40 @@
         FROM
         <include refid="table"/>
 where
-        bookNo=#{bookNo}
+        book_no=#{bookNo}
     </select>
     <update id="returnbook" parameterType="com.example.demo.model.BookRegister">
         update  <include refid="table"/>
         <set>
             state=#{state},
-            borrowerName="",
-            borrowerIphone="",
-            starttime="",
-            endtime="",
+            borrower_name="",
+            borrower_iphone="",
+            start_time="",
+            end_time="",
             renew=""
         </set>
         where
-        bookNo=#{bookNo}
+        book_no=#{bookNo}
     </update>
 
     <update id="renewBook" parameterType="com.example.demo.model.BookRegister">
         update  <include refid="table"/>
         <set>
             renew=#{renew},
-            starttime=#{starttime},
-            endtime=#{endtime}
+            start_time=#{starttime},
+            end_time=#{endtime}
         </set>
         where
-        bookNo=#{bookNo}
+        book_no=#{bookNo}
     </update>
 
     <update id="updateUrl" parameterType="com.example.demo.model.BookRegister">
         update  <include refid="table"/>
         <set>
-            bookImagesUrl=#{bookImagesUrl},
+            book_images_url=#{bookImagesUrl},
         </set>
         where
-        bookNo=#{bookNo}
+        book_no=#{bookNo}
     </update>
     <select id="quearyBookName" resultType="com.example.demo.model.BookRegister">
         SELECT
@@ -71,6 +71,6 @@ where
         FROM
         <include refid="table"/>
 where
-        bookNo=#{bookNo}
+        book_no=#{bookNo}
     </select>
 </mapper>
