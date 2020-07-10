@@ -36,10 +36,10 @@ class CarInfoDaoTest {
     @Test
  //   查询所有车辆
     void queryCarInfo() throws Exception{
-        List<carInfo> car_info=carInfoDao.queryCarInfo();
+        List<carInfo> car_info=carInfoDao.queryElectricCarInfo();
 
         System.out.println(car_info.get(0));
-        JSONObjectjson=c.queryAllCarInfo();
+        JSONObjectjson=c.queryElectricCarInfo();
 
     }
    //通过VIN号查询车辆

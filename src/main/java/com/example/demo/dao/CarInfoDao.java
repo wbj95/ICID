@@ -7,8 +7,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 @Mapper
 public interface CarInfoDao {
-    //查询所有车辆
-    List<carInfo> queryCarInfo();
+    //查询所有新能源车辆
+    List<carInfo> queryElectricCarInfo();
+    //查询所有传统车辆
+    List<carInfo> queryFuelCarInfo();
     //通过VIN号查询车辆信息
     carInfo queryCarInfoByVin(String vin);
     //通过ID修改车辆信息

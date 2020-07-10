@@ -33,10 +33,16 @@ public class CarInfoController {
     AliyunOSSUtil aliyun=new AliyunOSSUtil();
 
 
-  //查询所有车辆信息
-    @RequestMapping(path = {"/getAllCarInfo"},method = {RequestMethod.GET})
-    public JSONObject ListCar(){
-        return carInfoServer.queryAllCarInfo();
+  //查询所有新能源车辆信息
+    @RequestMapping(path = {"/getAllElectricCarInfo"},method = {RequestMethod.GET})
+    public JSONObject ListElectricCarInfo(){
+        return carInfoServer.queryElectricCarInfo();
+    }
+
+    //查询所有燃油车辆信息
+    @RequestMapping(path = {"/getAllFuelCarInfo"},method = {RequestMethod.GET})
+    public JSONObject ListFuelCarInfo(){
+        return carInfoServer.queryFuelCarInfo();
     }
 
     //查询版本，为了躲避腾讯审核

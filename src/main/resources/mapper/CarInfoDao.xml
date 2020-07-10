@@ -3,13 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.dao.CarInfoDao">
     <sql id="table">carinfomation</sql>
-    <sql id="selectFields">ID,vin, projectName,borrower ,configuration,state,city,address,datamileage,dataStart,longitude,latitude
+    <sql id="selectFields">id,vin, project_name,borrower ,configuration,vehicle_type ,state,city,address,data_mileage,data_start,longitude,latitude
     </sql>
-    <select id="queryCarInfo" resultType="com.example.demo.model.carInfo">
+    <select id="queryElectricCarInfo" resultType="com.example.demo.model.carInfo">
         SELECT
         *
         FROM
         <include refid="table"/>
+
+        where vehicle_type = 1
+
+    </select>
+
+    <select id="queryFuelCarInfo" resultType="com.example.demo.model.carInfo">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+
+        where vehicle_type = 0
 
     </select>
 

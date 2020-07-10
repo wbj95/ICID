@@ -2,17 +2,12 @@ package com.example.demo.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.example.demo.service.GetHeaderServer;
-import com.fasterxml.jackson.annotation.JsonAlias;
-import net.sf.json.JSON;
-
 import net.sf.json.JSONObject;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

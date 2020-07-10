@@ -36,10 +36,10 @@ public class CarInfoServer {
   MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
     //查询所有车辆
-    public JSONObject queryAllCarInfo(){
+    public JSONObject queryElectricCarInfo(){
         JSONObject json = new JSONObject();
         //构造json数据，先查询出数据库中所有的车辆vin
-        List<carInfo> allCarInfo = carInfoDao.queryCarInfo();
+        List<carInfo> allCarInfo = carInfoDao.queryElectricCarInfo();
 
         JSONObject j=new JSONObject();
         //定义String 数组，装vin号
@@ -90,8 +90,15 @@ public class CarInfoServer {
 
         }
         //再重新读取数据库中的值，将数据组成一个json传给前端
-        List<carInfo> allCarInfo2 = carInfoDao.queryCarInfo();
+        List<carInfo> allCarInfo2 = carInfoDao.queryElectricCarInfo();
         JSONArray jsonArray = JSONArray.fromObject(allCarInfo2);
+        json.put("data",jsonArray);
+        return json;
+    }
+    public  JSONObject  queryFuelCarInfo(){
+        JSONObject json = new JSONObject();
+        List<carInfo> allCarInfo = carInfoDao.queryFuelCarInfo();
+        JSONArray jsonArray = JSONArray.fromObject(allCarInfo);
         json.put("data",jsonArray);
         return json;
     }
@@ -190,7 +197,7 @@ public class CarInfoServer {
     public JSONObject queryRankin() {
 
         JSONObject jRank=new JSONObject();
-        List<carInfo> allCarVin = carInfoDao.queryCarInfo();
+        List<carInfo> allCarVin = carInfoDao.queryElectricCarInfo();
 
         //定义String 数组，装vin号
         String[] vin=new String[allCarVin.size()];

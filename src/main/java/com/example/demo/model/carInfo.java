@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 public class carInfo {
     //主键
-    private int ID;
+    private int id;
     //项目名
     private String projectName;
     //VIN号
@@ -11,12 +11,14 @@ public class carInfo {
     private String borrower;
     //配置
     private String configuration;
+    //类型
+    private int vehicleType;
     //状态
     private String state;
     //城市
     private String city;
     //周里程
-    private int datamileage;
+    private int dataMileage;
     //周启动次数
    private  int dataStart;
    //电话号码
@@ -40,6 +42,14 @@ public class carInfo {
         this.latitude = latitude;
     }
 
+    public int getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(int vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
     //纬度
     private  String latitude;
     public String getIphoneNum() {
@@ -55,11 +65,11 @@ public class carInfo {
     }
 
     public int getDatamileage() {
-        return datamileage;
+        return dataMileage;
     }
 
     public void setDatamileage(int datamileage) {
-        this.datamileage = datamileage;
+        this.dataMileage = datamileage;
     }
 
     public int getDataStart() {
@@ -101,12 +111,12 @@ public class carInfo {
         this.state = state;
     }
 
-    public Integer getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getProjectName() {

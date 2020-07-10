@@ -22,14 +22,12 @@ public class GetHeaderServer {
     String code = "enbudf";
     //ts
     String ts;
-    Long trs;
     String sign;
 
     //获得Get的Sign，只是简单的?vin=
     public String getSignbyVIN(String vin) {
         //获取时间戳
         ts = Long.toString(System.currentTimeMillis());
-        trs=System.currentTimeMillis();
 
         sign = key + "&vin=" + vin + "&" + ts + "&" + code + "&" + appSecret;
       //  sign = key + "&vin=" + vin + "&" + "1584932195239" + "&" + code + "&" + appSecret;
@@ -75,10 +73,6 @@ public class GetHeaderServer {
     //返回ts
     public String getTs(){
         return ts;
-    }
-
-    public Long getTrs(){
-        return trs;
     }
 
     //用于获取本周里程和本周启动次数
