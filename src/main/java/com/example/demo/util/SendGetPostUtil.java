@@ -53,7 +53,7 @@ public class SendGetPostUtil {
         return jsonObject;
     }
    //获取批量定位信息的POST请求
-    public String getHttpClient(String url, HttpMethod method,String[] vin, HttpHeaders headers) {
+    public String getHttpClient(String url, HttpMethod method,String vin, HttpHeaders headers) {
         RestTemplate template = new RestTemplate();
 
         //将请求体封装到map集合里面
@@ -62,12 +62,12 @@ public class SendGetPostUtil {
         //将vin封装成json
         JSONArray jsonArray=new JSONArray();
           //  maps.put("vin",vin);
-        for (int i=0;i<vin.length;i++){
+        /*for (int i=0;i<vin.length;i++){*/
             //将请求头部和参数合成一个请求
             JSONObject jsonObject1 = new JSONObject();
-            jsonObject1.put("vin",vin[i]);
+            jsonObject1.put("vin",vin);
             jsonArray.add(jsonObject1);
-        }
+        /*}*/
 
        JSONObject jsonObject2  = new JSONObject();
        jsonObject2.put("vinList",jsonArray.toString());

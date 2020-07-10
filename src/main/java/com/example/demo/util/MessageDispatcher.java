@@ -1,11 +1,8 @@
 package com.example.demo.util;
 
 import com.example.demo.model.TextMessage;
-import com.example.demo.model.carInfo;
 import com.example.demo.service.CarInfoServer;
-import org.springframework.stereotype.Service;
 
-import java.time.format.SignStyle;
 import java.util.Date;
 import java.util.Map;
 public class MessageDispatcher {

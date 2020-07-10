@@ -1,27 +1,24 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.CarInfoDao;
-import com.example.demo.model.carInfo;
+import com.example.demo.model.CarInfo;
 import com.example.demo.util.AliyunOSSUtil;
 import com.example.demo.util.GetLocation;
-import com.example.demo.util.GetTimeIntervalUtil;
 import com.example.demo.util.SendGetPostUtil;
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
-import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CarInfoServer {
@@ -38,7 +35,7 @@ public class CarInfoServer {
     //查询所有车辆
     public JSONObject queryElectricCarInfo(){
         JSONObject json = new JSONObject();
-        //构造json数据，先查询出数据库中所有的车辆vin
+        /*//构造json数据，先查询出数据库中所有的车辆vin
         List<carInfo> allCarInfo = carInfoDao.queryElectricCarInfo();
 
         JSONObject j=new JSONObject();
@@ -88,37 +85,82 @@ public class CarInfoServer {
            //根据vin号，将城市，位置插入数据库
             carInfoDao.updateCarCityAndAddressByVin(city,Address,v);
 
-        }
+        }*/
         //再重新读取数据库中的值，将数据组成一个json传给前端
-        List<carInfo> allCarInfo2 = carInfoDao.queryElectricCarInfo();
+        List<CarInfo> allCarInfo2 = carInfoDao.queryElectricCarInfo();
         JSONArray jsonArray = JSONArray.fromObject(allCarInfo2);
         json.put("data",jsonArray);
         return json;
     }
-    public  JSONObject  queryFuelCarInfo(){
+    public  JSONObject  queryFuelCarInfo(String vin){
         JSONObject json = new JSONObject();
-        List<carInfo> allCarInfo = carInfoDao.queryFuelCarInfo();
+        List<CarInfo> allCarInfo = carInfoDao.queryFuelCarInfo();
         JSONArray jsonArray = JSONArray.fromObject(allCarInfo);
         json.put("data",jsonArray);
         return json;
     }
     //查询单台车辆
-    public JSONObject queryCarInfoByVin(String Vin) {
+    public JSONObject queryCarInfoByVin(String vin) {
+         //构造json数据，先查询出数据库中所有的车辆vin
+        CarInfo carInfo = carInfoDao.queryCarInfoByVin(vin);
+        JSONObject j=new JSONObject();
 
+        //查询车辆定位信息经纬度
+        j=queryLocationByVin(vin);
+
+        //通过经纬度查询地址
+        JSONArray jr= JSONArray.fromObject(j.get("data"));
+        GetLocation g=new GetLocation();
+        List l=new ArrayList();
+        for (int i =0;i<jr.size();i++){
+            String lo=null;//经度
+            String la=null;//纬度
+            String v=null; //vin
+            lo= (String) jr.getJSONObject(i).get("longitude");
+            la= (String) jr.getJSONObject(i).get("latitude");
+            v= (String) jr.getJSONObject(i).get("vin");
+
+            //将获得的经纬度插入数据库中
+            carInfoDao.updateLocation(lo,la,v);
+
+            String city=null;//城市
+            String Address=null;//地址
+            //多层json,解析出城市和地址
+            JSONObject jj2= g.getAddress(lo,la);
+           JSONObject jso= JSONObject.fromObject(jj2.get("data"));
+           jso.put("vin",v);
+           JSONObject jj=JSONObject.fromObject(jso.get("regeocode"));
+           JSONObject jjj=JSONObject.fromObject(jj.get("addressComponent"));
+
+        //    city = (String) jjj.get("city");
+          // city = (String) jjj.get("province");
+
+            city= String.valueOf(jjj.get("city"));
+
+           if (city.equals("[]")){
+               city=String.valueOf(jjj.get("province"));
+           }
+
+           Address=jj.getString("formatted_address");
+
+           //根据vin号，将城市，位置插入数据库
+            carInfoDao.updateCarCityAndAddressByVin(city,Address,v);
+
+        }
+        //再重新读取数据库中的值，将数据组成一个json传给前端
         //访问的接口
-        String DataUrl = "https://dev-dataapi.sgmwcloud.com.cn/api/car/info/mileage?vin="+Vin;
+        String DataUrl = "https://dev-dataapi.sgmwcloud.com.cn/api/car/info/mileage?vin="+vin;
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("key", getHeaderServer.getKey());
         params.add("code", getHeaderServer.getCode());
-        params.add("sign",getHeaderServer.getSignbyVIN(Vin));
+        params.add("sign",getHeaderServer.getSignbyVIN(vin));
         params.add("ts", getHeaderServer.getTs());
-
         jsonObject=sendGetPostUtil.sendGetRequest(DataUrl,params);
 
         return jsonObject;
     }
 //   //查询定位经纬度
-    public JSONObject queryLocationByVin(String[] vin) {
+    public JSONObject queryLocationByVin(String vin) {
         //访问的接口
         String url="https://dataapi.sgmwcloud.com.cn/api/car/info/gps/batch";
 
@@ -134,11 +176,11 @@ public class CarInfoServer {
         return jsonObject;
     }
 //通过vin号查询车辆
-    public carInfo queryOneCarInfo(String vin){
+    public CarInfo queryOneCarInfo(String vin){
         return carInfoDao.queryCarInfoByVin(vin);
     }
     //添加车辆
-    public int AddCar(carInfo c){
+    public int AddCar(CarInfo c){
       return carInfoDao.insertCarInfo(c);
     }
     //删除车辆
@@ -188,7 +230,7 @@ public class CarInfoServer {
             jsonObject.put("suningData",jsonObject3.get("data"));
 
             //查询单台车数据
-        carInfo c=carInfoDao.queryCarInfoByVin(vin);
+        CarInfo c=carInfoDao.queryCarInfoByVin(vin);
 
         jsonObject.put("oneCar",c);
         return jsonObject;
@@ -197,7 +239,7 @@ public class CarInfoServer {
     public JSONObject queryRankin() {
 
         JSONObject jRank=new JSONObject();
-        List<carInfo> allCarVin = carInfoDao.queryElectricCarInfo();
+        List<CarInfo> allCarVin = carInfoDao.queryElectricCarInfo();
 
         //定义String 数组，装vin号
         String[] vin=new String[allCarVin.size()];
@@ -255,8 +297,8 @@ public class CarInfoServer {
         }
 
         //从数据库中按照里程降序读取
-        List<carInfo> CarMilege = carInfoDao.queryCarInfoByMileage();
-        List<carInfo> CarStart = carInfoDao.queryCarInfoByStart();
+        List<CarInfo> CarMilege = carInfoDao.queryCarInfoByMileage();
+        List<CarInfo> CarStart = carInfoDao.queryCarInfoByStart();
         JSONArray jsonArray = JSONArray.fromObject(CarMilege);
         JSONArray jsonArray2 = JSONArray.fromObject(CarStart);
         jRank.put("CarMilege",jsonArray);
@@ -270,7 +312,7 @@ public class CarInfoServer {
    //模糊查询
     public JSONObject fuzzyQuery(String vin) {
         JSONObject json = new JSONObject();
-        List<carInfo> allCarInfo2 = carInfoDao.fuzzyQueryCarInfo(vin);
+        List<CarInfo> allCarInfo2 = carInfoDao.fuzzyQueryCarInfo(vin);
         JSONArray jsonArray = JSONArray.fromObject(allCarInfo2);
 
         json.put("fuzzyQuery",jsonArray);

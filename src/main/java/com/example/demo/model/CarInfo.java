@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-public class carInfo {
+public class CarInfo {
     //主键
     private int id;
     //项目名

@@ -5,7 +5,7 @@
     <sql id="table">carinfomation</sql>
     <sql id="selectFields">id,vin, project_name,borrower ,configuration,vehicle_type ,state,city,address,data_mileage,data_start,longitude,latitude
     </sql>
-    <select id="queryElectricCarInfo" resultType="com.example.demo.model.carInfo">
+    <select id="queryElectricCarInfo" resultType="com.example.demo.model.CarInfo">
         SELECT
         *
         FROM
@@ -15,7 +15,7 @@
 
     </select>
 
-    <select id="queryFuelCarInfo" resultType="com.example.demo.model.carInfo">
+    <select id="queryFuelCarInfo" resultType="com.example.demo.model.CarInfo">
         SELECT
         *
         FROM
@@ -25,7 +25,7 @@
 
     </select>
 
-    <select id="fuzzyQueryCarInfo" resultType="com.example.demo.model.carInfo">
+    <select id="fuzzyQueryCarInfo" resultType="com.example.demo.model.CarInfo">
         SELECT
         *
         FROM
@@ -33,7 +33,7 @@
        where vin LIKE "%"#{vin}"%"
     </select>
 
-    <select id="queryCarInfoByMileage" resultType="com.example.demo.model.carInfo">
+    <select id="queryCarInfoByMileage" resultType="com.example.demo.model.CarInfo">
         SELECT
         *
         FROM
@@ -41,7 +41,7 @@
         ORDER by datamileage DESC
     </select>
 
-    <select id="queryCarInfoByStart" resultType="com.example.demo.model.carInfo">
+    <select id="queryCarInfoByStart" resultType="com.example.demo.model.CarInfo">
         SELECT
         *
         FROM
@@ -49,7 +49,7 @@
         ORDER by dataStart DESC
     </select>
 
-    <select id="queryCarInfoByVin" resultType="com.example.demo.model.carInfo">
+    <select id="queryCarInfoByVin" resultType="com.example.demo.model.CarInfo">
         SELECT
         *
         FROM
@@ -58,7 +58,7 @@
         vin=#{vin}
     </select>
 
-    <update id="updateCarInfoByID" parameterType="com.example.demo.model.carInfo">
+    <update id="updateCarInfoByID" parameterType="com.example.demo.model.CarInfo">
 update  <include refid="table"/>
     <set>
         projectName=#{projectName},
@@ -69,7 +69,7 @@ update  <include refid="table"/>
     </set>
     </update>
 
-    <update id="updateCarstartNumByVin" parameterType="com.example.demo.model.carInfo">
+    <update id="updateCarstartNumByVin" parameterType="com.example.demo.model.CarInfo">
         update  <include refid="table"/>
         <set>
             dataStart=NULL
@@ -78,7 +78,7 @@ update  <include refid="table"/>
         vin=#{vin}
     </update>
 
-    <update id="updateLocation" parameterType="com.example.demo.model.carInfo">
+    <update id="updateLocation" parameterType="com.example.demo.model.CarInfo">
         update  <include refid="table"/>
         <set>
             longitude=#{longitude},
@@ -88,7 +88,7 @@ update  <include refid="table"/>
         vin=#{vin}
     </update>
 
-    <update id="updateCarCityAndAddressByVin" parameterType="com.example.demo.model.carInfo">
+    <update id="updateCarCityAndAddressByVin" parameterType="com.example.demo.model.CarInfo">
         update  <include refid="table"/>
         <set>
             city=#{city},
@@ -98,7 +98,7 @@ update  <include refid="table"/>
         where vin=#{vin}
     </update>
 
-    <update id="updateMileageByVin" parameterType="com.example.demo.model.carInfo">
+    <update id="updateMileageByVin" parameterType="com.example.demo.model.CarInfo">
         update  <include refid="table"/>
         <set>
             datamileage=#{datamileage},
@@ -107,7 +107,7 @@ update  <include refid="table"/>
         where vin=#{vin}
     </update>
 
-    <update id="updataCarMileageAndStartByVin" parameterType="com.example.demo.model.carInfo">
+    <update id="updataCarMileageAndStartByVin" parameterType="com.example.demo.model.CarInfo">
         update  <include refid="table"/>
         <set>
             datamileage=#{datamileage},
@@ -117,7 +117,7 @@ update  <include refid="table"/>
         where vin=#{vin}
     </update>
 
-    <update id="updateBorrow" parameterType="com.example.demo.model.carInfo">
+    <update id="updateBorrow" parameterType="com.example.demo.model.CarInfo">
         update  <include refid="table"/>
         <set>
             borrower=#{borrower},
@@ -128,7 +128,7 @@ update  <include refid="table"/>
     </update>
 
     <insert id="insertCarInfo" useGeneratedKeys="true" keyProperty="ID"
-             parameterType="com.example.demo.model.carInfo">
+             parameterType="com.example.demo.model.CarInfo">
         INSERT INTO
         carinfomation(projectName,vin, borrower,configuration,state)
         VALUES

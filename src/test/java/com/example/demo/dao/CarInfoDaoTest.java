@@ -1,14 +1,9 @@
 package com.example.demo.dao;
 import com.example.demo.model.Staff;
-import com.example.demo.model.carInfo;
+import com.example.demo.model.CarInfo;
 import com.example.demo.service.CarInfoServer;
 import com.example.demo.util.AliyunOSSUtil;
-import com.example.demo.util.GetLocation;
-import com.example.demo.util.GetTimeIntervalUtil;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.jasper.tagplugins.jstl.core.Url;
-import org.hibernate.validator.constraints.SafeHtml;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -36,7 +29,7 @@ class CarInfoDaoTest {
     @Test
  //   查询所有车辆
     void queryCarInfo() throws Exception{
-        List<carInfo> car_info=carInfoDao.queryElectricCarInfo();
+        List<CarInfo> car_info=carInfoDao.queryElectricCarInfo();
 
         System.out.println(car_info.get(0));
         JSONObjectjson=c.queryElectricCarInfo();
@@ -45,7 +38,7 @@ class CarInfoDaoTest {
    //通过VIN号查询车辆
     @Test
     void queryCarInfoByVin() throws Exception{
-        carInfo car_Info=carInfoDao.queryCarInfoByVin("LK6ADCE29KB150869");
+        CarInfo car_Info=carInfoDao.queryCarInfoByVin("LK6ADCE29KB150869");
         System.out.println(car_Info.getBorrower()+""+car_Info.getDataStart()+"111");
    }
 //   //更新车辆
@@ -89,7 +82,7 @@ class CarInfoDaoTest {
     //查询经度、纬度
     @Test
     void queryLocationByVin(){
-        String s[]={"LK6ADCE21JB104631","LK6ADCE29KB150869"};
+        String s="LK6ADCE21JB104631";
         JSONObjectjson=c.queryLocationByVin(s);
         System.out.println(JSONObjectjson.toString());
     }

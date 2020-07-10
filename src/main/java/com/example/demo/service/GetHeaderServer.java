@@ -36,18 +36,18 @@ public class GetHeaderServer {
         return sign;
     }
     //获得sign,用于批量查询定位信息
-    public String getPostSign(String[] vin){
+    public String getPostSign(String vin){
         //获取时间戳
         ts = Long.toString(System.currentTimeMillis());
         Map<String, String> maps = new HashMap<>();
 
         JSONArray jsonArray=new JSONArray();
-        for(int i=0;i<vin.length;i++){
+        /*for(int i=0;i<vin.length;i++){*/
           //  maps.put("vin",vin[i]);
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("vin",vin[i]);
+            jsonObject.put("vin",vin);
             jsonArray.add(jsonObject);
-        }
+        /*}*/
        // sign=key+"&"+"vinList=[{\"vin\":\""+vin+"\"}]"+"&"+ ts + "&" + code + "&" + appSecret;
         sign=key+"&"+"vinList="+jsonArray.toString()+"&"+ ts + "&" + code + "&" + appSecret;
         System.out.println("sign:" + sign);

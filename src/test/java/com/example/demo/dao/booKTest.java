@@ -2,7 +2,6 @@ package com.example.demo.dao;
 
 import com.example.demo.model.BookRegister;
 import com.example.demo.model.Staff;
-import com.example.demo.model.carInfo;
 import com.example.demo.service.BookRegistServer;
 import org.junit.jupiter.api.Test;
 //import org.junit.Test;

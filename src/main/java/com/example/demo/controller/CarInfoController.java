@@ -1,14 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.CarInfoDao;
-import com.example.demo.model.carInfo;
+import com.example.demo.model.CarInfo;
 import com.example.demo.service.CarInfoServer;
 import com.example.demo.util.AliyunOSSUtil;
 import com.example.demo.util.MessageDispatcher;
 import com.example.demo.util.MessageUtil;
 import com.example.demo.util.SignUtil;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +16,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Map;
 
 
@@ -42,7 +39,7 @@ public class CarInfoController {
     //查询所有燃油车辆信息
     @RequestMapping(path = {"/getAllFuelCarInfo"},method = {RequestMethod.GET})
     public JSONObject ListFuelCarInfo(){
-        return carInfoServer.queryFuelCarInfo();
+        return carInfoServer.queryFuelCarInfo(Vin);
     }
 
     //查询版本，为了躲避腾讯审核
@@ -64,7 +61,7 @@ public class CarInfoController {
                       @RequestParam(value = "configuration", required = true) String configuration,
                       @RequestParam(value = "state", required = true) String state
                       ){
-        carInfo c = new carInfo();
+        CarInfo c = new CarInfo();
        c.setProjectName(projectName);
         c.setVin(vin);
         c.setBorrower(borrower);
@@ -81,12 +78,14 @@ public class CarInfoController {
                          @RequestParam(value = "configuration", required = true) String configuration,
                          @RequestParam(value = "state", required = true) String state
                          ){
+
         return carInfoServer.updateCar(id,projectName,vin,borrower,configuration,state);
 
     }
     //查询剩余电量,定位，本周里程，本周启动次数
     @RequestMapping(path = {"/getCarInfoByVin"},method = {RequestMethod.GET})
     public JSONObject QueryCarByInfoID(@RequestParam(value = "vin", required = true) String Vin){
+        carInfoServer.queryFuelCarInfo(Vin);
         return carInfoServer.queryCarInfoInfoByVin(Vin);
     }
     //查询排行
@@ -192,7 +191,7 @@ public class CarInfoController {
             return messageDispatcher.processEvent(map);
         }else{
             String content=map.get("Content");
-            carInfo c=carInfoServer.queryOneCarInfo(content);
+            CarInfo c=carInfoServer.queryOneCarInfo(content);
             if (c==null){//通过vin号查询出来的结果为空，borrow和iphone都为空
                 return messageDispatcher.processMessage(map,"","");
             }else {//查询出了结果，将数值传入方法中
