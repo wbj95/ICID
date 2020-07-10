@@ -92,7 +92,7 @@ public class CarInfoServer {
         json.put("data",jsonArray);
         return json;
     }
-    public  JSONObject  queryFuelCarInfo(String vin){
+    public  JSONObject  queryFuelCarInfo(){
         JSONObject json = new JSONObject();
         List<CarInfo> allCarInfo = carInfoDao.queryFuelCarInfo();
         JSONArray jsonArray = JSONArray.fromObject(allCarInfo);

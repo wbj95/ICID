@@ -39,7 +39,7 @@ public class CarInfoController {
     //查询所有燃油车辆信息
     @RequestMapping(path = {"/getAllFuelCarInfo"},method = {RequestMethod.GET})
     public JSONObject ListFuelCarInfo(){
-        return carInfoServer.queryFuelCarInfo(Vin);
+        return carInfoServer.queryFuelCarInfo();
     }
 
     //查询版本，为了躲避腾讯审核
@@ -62,7 +62,7 @@ public class CarInfoController {
                       @RequestParam(value = "state", required = true) String state
                       ){
         CarInfo c = new CarInfo();
-       c.setProjectName(projectName);
+        c.setProjectName(projectName);
         c.setVin(vin);
         c.setBorrower(borrower);
         c.setConfiguration(configuration);
@@ -85,7 +85,7 @@ public class CarInfoController {
     //查询剩余电量,定位，本周里程，本周启动次数
     @RequestMapping(path = {"/getCarInfoByVin"},method = {RequestMethod.GET})
     public JSONObject QueryCarByInfoID(@RequestParam(value = "vin", required = true) String Vin){
-        carInfoServer.queryFuelCarInfo(Vin);
+        carInfoServer.queryCarInfoByVin(Vin);
         return carInfoServer.queryCarInfoInfoByVin(Vin);
     }
     //查询排行
